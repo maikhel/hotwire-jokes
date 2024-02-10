@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 10
+  delay: 1
+
+two:
+  amount: 5
+  delay: 0

@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  body: Chuck Norris trims his beard with piranha"s.
+  jokes_request: one
+
+two:
+  body: If someone challenges Chuck Norris, life ends on Earth.
+  jokes_request: one
+
+three:
+  body: Chuck Norris thinks outside the box,then roundhouse kicks the box into oblivion.
+  jokes_request: two
+
