@@ -1,0 +1,28 @@
+<%= form_with(model: jokes_request) do |form| %>
+  <% if jokes_request.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(jokes_request.errors.count, "error") %> prohibited this jokes_request from being saved:</h2>
+
+      <ul>
+        <% jokes_request.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= form.label :amount, "Amount of jokes to fetch" %>
+    <%= form.number_field :amount, in: 1..100, step: 1  %>
+  </div>
+
+  <div>
+    <%= form.label :delay, "Delay between each request" %>
+    <%= form.number_field :delay, in: 0.0..30.0, step: 0.5 %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @jokes_request %>
+
+<% @jokes_request.jokes.each do |joke| %>
+  <%= render joke %>
+<% end %>
+
+<div>
+  <%= link_to "Edit this jokes request", edit_jokes_request_path(@jokes_request) %> |
+  <%= link_to "Back to jokes requests", jokes_requests_path %>
+
+  <%= button_to "Destroy this jokes request", @jokes_request, method: :delete %>
+</div>
