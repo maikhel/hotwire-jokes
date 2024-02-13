@@ -2,7 +2,7 @@ class JokesRequestsController < ApplicationController
   before_action :set_jokes_request, only: %i[ show edit update destroy ]
 
   def index
-    @jokes_requests = JokesRequest.all
+    @jokes_requests = JokesRequest.all.order(id: :desc)
   end
 
   def show
