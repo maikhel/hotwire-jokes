@@ -1,8 +1,11 @@
 <%= render @jokes_request %>
 
-<% @jokes_request.jokes.each do |joke| %>
-  <%= render joke %>
-<% end %>
+<h2 class="text-lg text-lime-500 text-center font-bold pb-2">Jokes</h2>
+<div class="grid grid-cols-3 gap-4 mt-4">
+  <% @jokes_request.jokes.each do |joke| %>
+    <%= render joke %>
+  <% end %>
+</div>
 
 <div>
   <%= link_to "Back to jokes request", jokes_requests_path, class: "mt-4 inline-block bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded transition duration-300" %>
