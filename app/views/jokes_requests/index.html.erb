@@ -1,14 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="text-3xl text-slate-500 font-bold mb-4">List of Jokes Requests</h1>
 
-<h1>Jokes requests</h1>
-
-<div id="jokes_requests">
+<div id="jokes_requests" class="grid grid-cols-3 gap-4">
   <% @jokes_requests.each do |jokes_request| %>
-    <%= render jokes_request %>
-    <p>
-      <%= link_to "Show this jokes request", jokes_request %>
-    </p>
+    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
+      <%= render jokes_request %>
+      <p class="mt-4">
+        <%= link_to "More", jokes_request, class: "bg-lime-500 hover:bg-lime-600 mt-4 text-white font-bold py-2 px-4 rounded transition duration-300" %>
+      </p>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New jokes request", new_jokes_request_path %>
+<div class="flex justify-center">
+  <%= link_to "New jokes request", new_jokes_request_path, class: "mt-4 inline-block bg-gradient-to-r from-lime-400 to-slate-300 hover:from-slate-300 hover:to-lime-400 text-white font-bold py-2 px-4 rounded transition duration-300" %>
+</div>
+

@@ -1,28 +1,35 @@
 <%= form_with(model: jokes_request) do |form| %>
   <% if jokes_request.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(jokes_request.errors.count, "error") %> prohibited this jokes_request from being saved:</h2>
-
-      <ul>
-        <% jokes_request.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="bg-pink-200 text-slate-700 font-bold text-center py-4 mb-4 rounded">
+      <%= pluralize(jokes_request.errors.count, "error") %> prohibited this jokes_request from being saved:
+      <p class="font-normal"><%= jokes_request.errors.full_messages.to_sentence.capitalize %> </p>
     </div>
   <% end %>
 
-
-  <div>
-    <%= form.label :amount, "Amount of jokes to fetch" %>
-    <%= form.number_field :amount, in: 1..100, step: 1  %>
+  <div class="flex items-center items-start mb-4">
+    <div class="w-1/5">
+      <%= form.label :amount, "Amount of jokes to fetch", class: "block text-slate-500 font-bold text-right pr-4" %>
+    </div>
+    <div class="w-24">
+      <%= form.number_field :amount, class: "form-input mt-1 block w-full rounded border-gray-200 py-2 px-4 text-slate-400 leading-tight focus:border-cyan-500" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :delay, "Delay between each request" %>
-    <%= form.number_field :delay, in: 0.0..30.0, step: 0.5 %>
+  <div class="flex items-center items-start mb-4">
+    <div class="w-1/5">
+      <%= form.label :delay, "Delay between each request (in seconds)", class: "block text-slate-500 font-bold text-right pr-4" %>
+    </div>
+    <div class="w-24">
+      <%= form.number_field :delay, in: 0.0..30.0, step: 0.5, class: "form-input mt-1 block w-full rounded border-gray-200 py-2 px-4 text-slate-400 leading-tight focus:border-cyan-500" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+
+  <div class="flex items-start mt-4">
+    <div class="mt-4">
+      <%= link_to "Back to jokes request", jokes_requests_path, class: "inline-block bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded transition duration-300" %>
+      <%= form.submit "Save", class: "mx-2 inline-block bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded hover:cursor-pointer" %>
+    </div>
   </div>
+
 <% end %>
