@@ -16,11 +16,15 @@ class JokesRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create jokes_request" do
+    stub_request(:get, FetchJokesService::API_ENDPOINT)
+      .to_return(status: 200, body: { value: "Chuck Norris can divide by zero." }.to_json)
+
     assert_difference("JokesRequest.count") do
-      post jokes_requests_url, params: { jokes_request: { amount: 10, delay: 1 } }
+      post jokes_requests_url, params: { jokes_request: { amount: 5, delay: 1 } }
     end
 
     assert_redirected_to jokes_request_url(JokesRequest.last)
+    assert JokesRequest.last.jokes.count, 5
   end
 
   test "should show jokes_request" do

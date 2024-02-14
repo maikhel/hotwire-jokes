@@ -20,6 +20,7 @@ class JokesRequestsController < ApplicationController
 
     respond_to do |format|
       if @jokes_request.save
+        FetchJokesService.new(@jokes_request.id).call
         format.html { redirect_to jokes_request_url(@jokes_request), notice: "Jokes request was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
