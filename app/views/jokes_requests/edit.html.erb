@@ -1,3 +1,10 @@
 <h1 class="text-3xl text-slate-500 font-bold mb-4">Edit Jokes Request</h1>
 
-<%= render "form", jokes_request: @jokes_request %>
+<%= turbo_frame_tag @jokes_request do %>
+  <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
+    <div class="flex justify-between items-center mb-4 border-b border-neutral-300">
+      <h2 class="text-xl text-slate-500 font-bold pb-2">Jokes Request #<%= @jokes_request.id %></h2>
+    </div>
+    <%= render "form", jokes_request: @jokes_request %>
+  </div>
+<% end %>

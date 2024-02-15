@@ -1,15 +1,10 @@
 <h1 class="text-3xl text-slate-500 font-bold mb-4">List of Jokes Requests</h1>
 
-<div id="jokes_requests" class="grid grid-cols-3 gap-4">
-  <% @jokes_requests.each do |jokes_request| %>
-    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
-      <%= render jokes_request %>
-      <p class="mt-4">
-        <%= link_to "More", jokes_request, class: "bg-lime-500 hover:bg-lime-600 mt-4 text-white font-bold py-2 px-4 rounded transition duration-300" %>
-      </p>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag 'jokes_requests' do %>
+  <div class="grid grid-cols-3 gap-4">
+    <%= render @jokes_requests %>
+  </div>
+<% end %>
 
 <div class="flex justify-center">
   <%= link_to "New jokes request", new_jokes_request_path, class: "mt-4 inline-block bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-white font-bold py-2 px-4 rounded transition duration-300" %>

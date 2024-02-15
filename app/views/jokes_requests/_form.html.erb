@@ -7,27 +7,26 @@
   <% end %>
 
   <div class="flex items-center items-start mb-4">
-    <div class="w-1/5">
+    <div class="w-1/2">
       <%= form.label :amount, "Amount of jokes to fetch", class: "block text-slate-500 font-bold text-right pr-4" %>
     </div>
-    <div class="w-24">
+    <div class="w-1/2">
       <%= form.number_field :amount, class: "form-input mt-1 block w-full rounded border-gray-200 py-2 px-4 text-slate-400 leading-tight focus:border-cyan-500" %>
     </div>
   </div>
 
   <div class="flex items-center items-start mb-4">
-    <div class="w-1/5">
+    <div class="w-1/2">
       <%= form.label :delay, "Delay between each request (in seconds)", class: "block text-slate-500 font-bold text-right pr-4" %>
     </div>
-    <div class="w-24">
+    <div class="w-1/2">
       <%= form.number_field :delay, in: 0.0..30.0, step: 0.5, class: "form-input mt-1 block w-full rounded border-gray-200 py-2 px-4 text-slate-400 leading-tight focus:border-cyan-500" %>
     </div>
   </div>
 
-
   <div class="flex items-start mt-4">
     <div class="mt-4">
-      <%= link_to "Back to jokes request", jokes_requests_path, class: "inline-block bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded transition duration-300" %>
+      <%= link_to "Cancel", jokes_requests_path, class: "inline-block bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded transition duration-300" %>
       <%= form.submit "Save", class: "mx-2 inline-block bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded hover:cursor-pointer" %>
     </div>
   </div>

@@ -1,11 +1,29 @@
-<%= render @jokes_request %>
+<div class="flex justify-between items-center mb-4 border-b border-neutral-300">
+  <h2 class="text-xl text-slate-500 font-bold pb-2">Jokes Request #<%= @jokes_request.id %></h2>
+</div>
+
+<div class="flex mt-1">
+  <div class="font-bold">Created at:</div>
+  <div class="mx-2"><%= @jokes_request.created_at %></div>
+</div>
+
+<div class="flex mt-1">
+  <div class="font-bold">Amount:</div>
+  <div class="mx-2"><%= @jokes_request.amount %></div>
+</div>
+
+<div class="flex mt-1">
+  <div class="font-bold">Delay (in seconds):</div>
+  <div class="mx-2"><%= @jokes_request.delay %></div>
+</div>
 
 <h2 class="text-lg text-lime-500 text-center font-bold pb-2">Jokes</h2>
-<div class="grid grid-cols-3 gap-4 mt-4">
+
+<%= turbo_frame_tag 'jokes', class: "grid grid-cols-3 gap-4 mt-4" do %>
   <% @jokes_request.jokes.each do |joke| %>
     <%= render joke %>
   <% end %>
-</div>
+<% end %>
 
 <div>
   <%= link_to sanitize("&larr; Back to jokes requests"), jokes_requests_path, class: "mt-4 inline-block text-slate-500" %>
