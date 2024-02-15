@@ -6,6 +6,7 @@ class JokesRequestsController < ApplicationController
   end
 
   def show
+    @jokes = @jokes_request.jokes.order(id: :asc)
   end
 
   def new

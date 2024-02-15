@@ -17,12 +17,12 @@
   <div class="mx-2"><%= @jokes_request.delay %></div>
 </div>
 
+<%= turbo_stream_from @jokes_request, "jokes" %>
+
 <h2 class="text-lg text-lime-500 text-center font-bold pb-2">Jokes</h2>
 
 <%= turbo_frame_tag 'jokes', class: "grid grid-cols-3 gap-4 mt-4" do %>
-  <% @jokes_request.jokes.each do |joke| %>
-    <%= render joke %>
-  <% end %>
+  <%= render @jokes %>
 <% end %>
 
 <div>
