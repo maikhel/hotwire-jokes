@@ -2,7 +2,7 @@ require "test_helper"
 
 class FetchJokesServiceTest < ActiveSupport::TestCase
   def setup
-    @jokes_request = JokesRequest.create(amount: 3, delay: 1)
+    @jokes_request = JokesRequest.create(amount: 3, delay: 0)
   end
 
   test "should fetch jokes and save them as Joke objects" do

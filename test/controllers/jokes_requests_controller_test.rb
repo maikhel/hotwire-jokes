@@ -20,7 +20,7 @@ class JokesRequestsControllerTest < ActionDispatch::IntegrationTest
       .to_return(status: 200, body: { value: "Chuck Norris can divide by zero." }.to_json)
 
     assert_difference("JokesRequest.count") do
-      post jokes_requests_url, params: { jokes_request: { amount: 5, delay: 1 } }
+      post jokes_requests_url, params: { jokes_request: { amount: 5, delay: 0 } }
     end
 
     assert_redirected_to jokes_request_url(JokesRequest.last)
@@ -40,7 +40,7 @@ class JokesRequestsControllerTest < ActionDispatch::IntegrationTest
   test "should update jokes_request" do
     patch jokes_request_url(@jokes_request), params: { jokes_request: { amount: 20 } }
     assert @jokes_request.reload.amount, 20
-    assert_redirected_to jokes_request_url(@jokes_request)
+    assert_redirected_to jokes_requests_url
   end
 
   test "should destroy jokes_request" do

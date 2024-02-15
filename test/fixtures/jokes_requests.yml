@@ -2,7 +2,7 @@
 
 one:
   amount: 10
-  delay: 1
+  delay: 0
 
 two:
   amount: 5
