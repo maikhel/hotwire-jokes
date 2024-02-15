@@ -15,6 +15,7 @@ class FetchJokesService
       joke = parse_response(response)
 
       @jokes_request.jokes.create(body: joke)
+      sleep(@jokes_request.delay) if @jokes_request.delay.positive?
     end
 
     true
