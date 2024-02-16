@@ -1,3 +1,6 @@
+<%= turbo_stream_from @jokes_request, "jokes" %>
+<%= turbo_stream_from @jokes_request, "jokes_count" %>
+
 <div class="flex justify-between items-center mb-4 border-b border-neutral-300">
   <h2 class="text-xl text-slate-500 font-bold pb-2">Jokes Request #<%= @jokes_request.id %></h2>
 </div>
@@ -17,13 +20,17 @@
   <div class="mx-2"><%= @jokes_request.delay %></div>
 </div>
 
-<%= turbo_stream_from @jokes_request, "jokes" %>
+<div class="flex mt-1">
+  <div class="font-bold mr-2">Jokes count:</div>
+  <%= render "jokes_count", jokes_request: @jokes_request %>
+</div>
+
 
 <h2 class="text-lg text-lime-500 text-center font-bold pb-2">Jokes</h2>
 
-<%= turbo_frame_tag 'jokes', class: "grid grid-cols-3 gap-4 mt-4" do %>
+<div id="jokes" class="grid grid-cols-3 gap-4 mt-4">
   <%= render @jokes %>
-<% end %>
+</div>
 
 <div>
   <%= link_to sanitize("&larr; Back to jokes requests"), jokes_requests_path, class: "mt-4 inline-block text-slate-500" %>
