@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(jokes_request) do %>
   <div class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
     <div class="flex justify-between items-center mb-4 border-b border-neutral-300">
-      <%= link_to "Jokes Request #{jokes_request.id}", jokes_request, data: { turbo_frame: "_top" }, class: "text-xl text-slate-500 font-bold pb-2" %>
+      <%= link_to "Jokes Request ##{jokes_request.id}", jokes_request, data: { turbo_frame: "_top" }, class: "text-xl text-slate-500 font-bold pb-2" %>
       <div class="flex items-center">
         <%= link_to edit_jokes_request_path(jokes_request), class: "text-gray-500 hover:text-gray-700 mx-2" do %>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
