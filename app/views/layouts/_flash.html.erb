@@ -1,6 +1,10 @@
-<% if notice %>
-  <div class="bg-slate-200 text-slate-700 text-center py-4 mb-4 rounded">
-    <%= notice %>
+<% flash.each do |flash_type, message| %>
+  <div
+    class="flash-message bg-gradient-to-r from-slate-50 to-slate-400 text-slate-700 text-center py-4 mb-4 rounded"
+    data-controller="removals"
+    data-action="animationend->removals#remove"
+  >
+    <%= message %>
   </div>
 <% end %>
 

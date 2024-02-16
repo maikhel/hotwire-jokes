@@ -11,10 +11,10 @@
   </head>
 
   <body class="bg-neutral-100 font-sans">
+    <div id="flash" class="flash absolute top-0 w-full">
+      <%= render "layouts/flash" %>
+    </div>
     <main class="container bg-white rounded-lg shadow-lg mx-auto my-24 p-6">
-      <div id="flash" class="flash">
-        <%= render "layouts/flash" %>
-      </div>
       <%= yield %>
     </main>
   </body>

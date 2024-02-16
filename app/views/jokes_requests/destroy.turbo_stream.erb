@@ -1,4 +1,5 @@
 <%= turbo_stream.remove @jokes_request %>
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %>
 
 <% unless JokesRequest.any? %>
   <%= turbo_stream.prepend 'jokes_requests' do %>

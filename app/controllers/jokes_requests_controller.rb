@@ -33,6 +33,7 @@ class JokesRequestsController < ApplicationController
     respond_to do |format|
       if @jokes_request.update(jokes_request_params)
         format.html { redirect_to jokes_requests_path, notice: "Jokes request was successfully updated." }
+        format.turbo_stream { flash.now[:notice] = "Jokes request was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -44,7 +45,7 @@ class JokesRequestsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to jokes_requests_url, notice: "Jokes request was successfully destroyed." }
-      format.turbo_stream
+      format.turbo_stream { flash.now[:notice] = "Jokes request was successfully destroyed." }
     end
   end
 

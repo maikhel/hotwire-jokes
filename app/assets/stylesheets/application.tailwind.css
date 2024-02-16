@@ -2,12 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+.flash-message {
+  animation: appear-then-fade 4s both;
 }
 
-*/
