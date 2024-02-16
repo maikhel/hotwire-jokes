@@ -24,10 +24,10 @@
     </div>
   </div>
 
-  <div class="flex items-start mt-4">
+  <div class="flex justify-center mt-4">
     <div class="mt-4">
       <%= link_to "Cancel", jokes_requests_path, class: "inline-block bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded transition duration-300" %>
-      <%= form.submit "Save", class: "mx-2 inline-block bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded hover:cursor-pointer" %>
+      <%= form.submit "Save", class: "mx-2 inline-block bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded hover:cursor-pointer",  data: { turbo_frame: "_top" } %>
     </div>
   </div>
 

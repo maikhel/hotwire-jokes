@@ -1,13 +1,15 @@
 <h1 class="text-3xl text-slate-500 text-center font-bold mb-8">List of Jokes Requests</h1>
 
-<%= turbo_frame_tag 'jokes_requests' do %>
-  <%= render "jokes_requests/empty" if @jokes_requests.empty? %>
-  <div class="grid grid-cols-3 gap-4">
-    <%= render @jokes_requests %>
-  </div>
+<%= turbo_frame_tag 'jokes_requests', class: "grid grid-cols-3 gap-4" do %>
+  <%= render @jokes_requests %>
+  <%= turbo_frame_tag JokesRequest.new %>
 <% end %>
 
+<div id="empty_jokes_requests">
+  <%= render "jokes_requests/empty" if @jokes_requests.empty? %>
+</div>
+
 <div class="flex justify-center">
-  <%= link_to "New jokes request", new_jokes_request_path, class: "mt-4 inline-block bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-white font-bold py-2 px-4 rounded transition duration-300" %>
+  <%= link_to "New jokes request", new_jokes_request_path, class: "mt-4 inline-block bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-white font-bold py-2 px-4 rounded transition duration-300", data: { turbo_frame: dom_id(JokesRequest.new) } %>
 </div>
 
