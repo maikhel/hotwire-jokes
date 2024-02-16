@@ -251,8 +251,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    solid_queue (0.2.1)
-      rails (~> 7.1)
+    sidekiq (7.2.1)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.19.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -317,7 +320,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rubocop-rails-omakase
   selenium-webdriver
-  solid_queue
+  sidekiq
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

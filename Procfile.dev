@@ -1,4 +1,5 @@
 web: env RUBY_DEBUG_OPEN=true bin/rails server
+jobs: bundle exec sidekiq -C config/sidekiq.yml
 js: yarn build --watch
 css: yarn build:css --watch
 css: bin/rails tailwindcss:watch
