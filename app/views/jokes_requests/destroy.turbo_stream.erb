@@ -1,1 +1,7 @@
 <%= turbo_stream.remove @jokes_request %>
+
+<% unless JokesRequest.any? %>
+  <%= turbo_stream.prepend 'jokes_requests' do %>
+    <%= render "jokes_requests/empty" %>
+  <% end %>
+<% end %>
