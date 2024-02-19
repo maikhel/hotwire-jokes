@@ -1,4 +1,6 @@
 class JokesRequestsController < ApplicationController
+  include Pagy::Backend
+
   before_action :set_jokes_request, only: %i[ show edit update destroy ]
 
   def index
@@ -6,7 +8,7 @@ class JokesRequestsController < ApplicationController
   end
 
   def show
-    @jokes = @jokes_request.jokes.order(id: :asc)
+    @pagy, @jokes = pagy(@jokes_request.jokes.order(id: :asc), items: 9, link_extra: 'data-turbo-action="advance"')
   end
 
   def new

@@ -28,9 +28,16 @@
 
 <h2 class="text-2xl text-lime-500 text-center font-bold pb-2">Jokes</h2>
 
-<div id="jokes" class="grid grid-cols-3 gap-4 mt-4">
-  <%= render @jokes %>
-</div>
+<%= turbo_frame_tag "jokes" do %>
+  <div id='jokes_grid' class="grid grid-cols-3 gap-4 mt-4">
+    <%= render @jokes %>
+  </div>
+  <% if @jokes.any? %>
+    <div class="flex items-center justify-center border-t border-gray-200 p-4">
+      <%== pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+<% end %>
 
 <div>
   <%= link_to sanitize("&larr; Back to jokes requests"), jokes_requests_path, class: "mt-4 inline-block text-slate-500" %>
