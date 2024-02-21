@@ -1,0 +1,5 @@
+<% progress_width = jokes_request.jokes.count / jokes_request.amount.to_f * 100 %>
+
+<div id="jokes_progress_bar" class="w-full bg-gray-200 rounded-full">
+  <div class="h-0.5 bg-lime-500 rounded-full" style="width: <%= progress_width.to_i %>%;"></div>
+</div>

@@ -6,9 +6,9 @@ class Joke < ApplicationRecord
   validates :body, presence: true
 
   after_create_commit ->(joke) do
-    broadcast_replace_to([ joke.jokes_request, "jokes_count" ], target: "jokes_count", partial: "jokes_requests/jokes_count", locals: { jokes_request: joke.jokes_request })
-
-    add_new_jokes_to_show_view(joke)
+    update_jokes_count_on_show_view(joke)
+    update_jokes_progress_bar_on_show_view(joke)
+    update_jokes_on_show_view(joke)
   end
 
   private
@@ -17,7 +17,17 @@ class Joke < ApplicationRecord
     Pagy.new(count: jokes_count, page: page_num, items: PER_PAGE, link_extra: 'data-turbo-action="advance"')
   end
 
-  def add_new_jokes_to_show_view(joke)
+  def update_jokes_count_on_show_view(joke)
+    broadcast_replace_to([ joke.jokes_request, "jokes_count" ], target: "jokes_count",
+                         partial: "jokes_requests/jokes_count", locals: { jokes_request: joke.jokes_request })
+  end
+
+  def update_jokes_progress_bar_on_show_view(joke)
+    broadcast_replace_to([ joke.jokes_request, "jokes_progress_bar" ], target: "jokes_progress_bar",
+                         partial: "jokes_requests/jokes_progress_bar", locals: { jokes_request: joke.jokes_request })
+  end
+
+  def update_jokes_on_show_view(joke)
     jokes_count = joke.jokes_request.jokes.size
     last_page = jokes_count / PER_PAGE + 1
 
