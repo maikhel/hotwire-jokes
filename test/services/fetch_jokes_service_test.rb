@@ -17,6 +17,23 @@ class FetchJokesServiceTest < ActiveSupport::TestCase
     end
   end
 
+
+  test "should fetch only missing jokes (up to requested amount)" do
+    stub_request(:get, FetchJokesService::API_ENDPOINT)
+      .to_return(status: 200, body: { value: "Chuck Norris can divide by zero." }.to_json)
+
+    existing_joke = Joke.create!(jokes_request: @jokes_request,
+                                 body: "Pain and death is what Chuck Norris makes it.")
+
+    assert FetchJokesService.new(@jokes_request.id).call, true
+
+    assert_equal 3, @jokes_request.jokes.count
+    assert_equal existing_joke.body, @jokes_request.jokes.first.body
+    @jokes_request.jokes.last(2).each do |joke|
+      assert_equal "Chuck Norris can divide by zero.", joke.body
+    end
+  end
+
   test "should handle JSON response error gracefully" do
     stub_request(:get, FetchJokesService::API_ENDPOINT)
       .to_return(status: 200, body: "invalid json")

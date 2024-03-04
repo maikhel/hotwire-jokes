@@ -10,7 +10,8 @@ class FetchJokesService
 
   def call
     jokes = []
-    @jokes_request.amount.times do
+
+    missing_jokes_count.times do
       response = make_request
       joke = parse_response(response)
 
@@ -22,6 +23,10 @@ class FetchJokesService
   end
 
   private
+
+  def missing_jokes_count
+    @jokes_request.amount - @jokes_request.jokes.size
+  end
 
   def make_request
     uri = URI(API_ENDPOINT)
