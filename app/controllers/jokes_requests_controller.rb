@@ -8,7 +8,7 @@ class JokesRequestsController < ApplicationController
   end
 
   def show
-    @pagy, @jokes = pagy(@jokes_request.jokes.order(id: :asc), items: Joke::PER_PAGE, link_extra: 'data-turbo-action="advance"')
+    @jokes = @jokes_request.jokes.order(id: :asc).pluck(:body)
   end
 
   def new

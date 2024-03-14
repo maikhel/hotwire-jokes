@@ -11,12 +11,13 @@ class FetchJokesService
   def call
     jokes = []
 
-    missing_jokes_count.times do
+    missing_jokes_count.times do |num|
       response = make_request
       joke = parse_response(response)
 
       @jokes_request.jokes.create(body: joke)
-      sleep(@jokes_request.delay) if @jokes_request.delay.positive?
+      broadcast_update_to_show_page(joke, num)
+      sleep(jokes_request.delay) if jokes_request.delay.positive?
     end
 
     true
@@ -24,8 +25,43 @@ class FetchJokesService
 
   private
 
+  attr_reader :jokes_request
+
+  def broadcast_update_to_show_page(joke, num)
+    add_joke(joke)
+    update_progress_bar(num + 1)
+    update_jokes_count(num + 1)
+  end
+
+  def add_joke(joke)
+    Turbo::StreamsChannel.broadcast_append_to(
+      [ jokes_request, "jokes" ],
+      target: "jokes_grid",
+      partial: "jokes/joke",
+      locals: { joke: joke }
+    )
+  end
+
+  def update_progress_bar(number)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes_progress_bar" ],
+      target: "jokes_progress_bar",
+      partial: "jokes_requests/jokes_progress_bar",
+      locals: { actual: number, limit: jokes_request.amount }
+    )
+  end
+
+  def update_jokes_count(number)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes_count" ],
+      target: "jokes_count",
+      partial: "jokes_requests/jokes_count",
+      locals: { actual: number, limit: jokes_request.amount }
+    )
+  end
+
   def missing_jokes_count
-    @jokes_request.amount - @jokes_request.jokes.size
+    jokes_request.amount
   end
 
   def make_request
