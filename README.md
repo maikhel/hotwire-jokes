@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple application to experiment with Turbo. Mainly used for learning/inspiration purposes.
 
-Things you may want to cover:
+## Tags
 
-* Ruby version
+Use tags to jump around different stages of the app development:
 
-* System dependencies
+|Stage |Tag name | Link | Local command |
+| :---: | :---: | :--: | :---: |
+|Scaffold of app | base-app | [link](https://github.com/maikhel/hotwire-jokes/tree/base-app) | `git checkout base-app`
+|Broadcast jokes from model | broadcast-with-pagination |[link](https://github.com/maikhel/hotwire-jokes/tree/broadcast-with-pagination) | `git checkout broadcast-with-pagination`
+|Broadcast jokes from job | broadcast-from-job | [link](https://github.com/maikhel/hotwire-jokes/tree/broadcast-from-job) | `git checkout broadcast-from-job`
 
-* Configuration
+## Setup
 
-* Database creation
+This application uses:
+- ruby 3.1.2
+- sqlite 3
+- sidekiq 7.2.1
 
-* Database initialization
+Have them installed, clone repo and run:
 
-* How to run the test suite
+```
+$ bundle
+$ rails db:setup
+$ bin/dev
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Testing
 
-* Deployment instructions
-
-* ...
+Run `$ bundle exec rails test` for tests.
