@@ -1,0 +1,14 @@
+<% 10.times do %>
+  <%= turbo_frame_tag "joke", src: fetch_joke_path do %>
+    <p>Chucking a joke...</p>
+  <% end %>
+<% end %>
+
+<div class="mb-96">THEY SEE ME MARGIN, THEY H8IN</div>
+<div class="mb-96">THEY SEE ME MARGIN, THEY H8IN</div>
+<div class="mb-96">THEY SEE ME MARGIN, THEY H8IN</div>
+<div class="mb-96">THEY SEE ME MARGIN, THEY H8IN</div>
+
+<%= turbo_frame_tag "joke", src: fetch_joke_path, loading: "lazy" do %>
+  <p>Lazy chucking a joke...</p>
+<% end %>
