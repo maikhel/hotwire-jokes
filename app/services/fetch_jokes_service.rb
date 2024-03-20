@@ -11,12 +11,13 @@ class FetchJokesService
   def call
     jokes = []
 
-    missing_jokes_count.times do
+    missing_jokes_count.times do |num|
       response = make_request
       joke = parse_response(response)
 
       @jokes_request.jokes.create(body: joke)
-      sleep(@jokes_request.delay) if @jokes_request.delay.positive?
+      broadcast_update_to_show_page(joke, num + 1)
+      sleep(jokes_request.delay) if jokes_request.delay.positive?
     end
 
     true
@@ -24,8 +25,76 @@ class FetchJokesService
 
   private
 
+  attr_reader :jokes_request
+
+  def broadcast_update_to_show_page(joke, num)
+    add_joke(joke, num)
+    update_progress_bar(num)
+    update_jokes_count(num)
+  end
+
+  def add_joke(joke, jokes_count)
+    last_page = jokes_count / Joke::PER_PAGE + 1
+
+    if jokes_count % Joke::PER_PAGE ==  1 # change page to next one
+      clear_all_jokes
+      add_joke_card(joke)
+      replace_pagination(jokes_count, last_page)
+    else
+      add_joke_card(joke)
+    end
+  end
+
+  def clear_all_jokes
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes" ],
+      target: "jokes_grid",
+      partial: "jokes_requests/empty_jokes_grid"
+    )
+  end
+
+  def add_joke_card(joke)
+    Turbo::StreamsChannel.broadcast_append_to(
+      [ jokes_request, "jokes" ],
+      target: "jokes_grid",
+      partial: "jokes/joke",
+      locals: { joke: joke }
+    )
+  end
+
+  def replace_pagination(jokes_count, last_page)
+    pagy = Pagy.new(count: jokes_count, page: last_page,
+              items: Joke::PER_PAGE,
+              link_extra: 'data-turbo-action="advance"')
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes_pagination" ],
+      target: "jokes_pagination",
+      partial: "jokes_requests/jokes_pagination",
+      locals: { pagy: pagy }
+    )
+  end
+
+  def update_progress_bar(number)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes_progress_bar" ],
+      target: "jokes_progress_bar",
+      partial: "jokes_requests/jokes_progress_bar",
+      locals: { actual: number, limit: jokes_request.amount }
+    )
+  end
+
+  def update_jokes_count(number)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      [ jokes_request, "jokes_count" ],
+      target: "jokes_count",
+      partial: "jokes_requests/jokes_count",
+      locals: { actual: number, limit: jokes_request.amount }
+    )
+  end
+
   def missing_jokes_count
-    @jokes_request.amount - @jokes_request.jokes.size
+    jokes_request.amount - jokes_request.jokes.size
   end
 
   def make_request

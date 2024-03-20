@@ -1,5 +1,5 @@
 class Joke < ApplicationRecord
-  include LiveView::JokesObserver
+  PER_PAGE = 9
 
   belongs_to :jokes_request
 

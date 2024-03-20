@@ -24,16 +24,18 @@
 
 <div class="flex mt-1">
   <div class="font-bold mr-2">Jokes count:</div>
-  <%= render "jokes_count", jokes_request: @jokes_request %>
+  <%= render "jokes_count", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
 </div>
 
 <h2 class="text-2xl text-lime-500 text-center font-bold pb-2">Jokes</h2>
 
-<%= render "jokes_progress_bar", jokes_request: @jokes_request %>
+<%= render "jokes_progress_bar", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
 
 <%= turbo_frame_tag "jokes" do %>
   <div id='jokes_grid' class="grid grid-cols-3 gap-4 mt-4">
-    <%= render @jokes %>
+    <% @jokes.each do |joke| %>
+      <%= render 'jokes/joke', joke: joke %>
+    <% end %>
   </div>
   <%= render "jokes_pagination", pagy: @pagy %>
 <% end %>
