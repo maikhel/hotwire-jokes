@@ -8,7 +8,7 @@ class FetchJokesService
     @jokes_request = JokesRequest.find(jokes_request_id)
   end
 
-  def call
+  def perform(missing_jokes_count)
     jokes = []
 
     missing_jokes_count.times do |num|
@@ -91,10 +91,6 @@ class FetchJokesService
       partial: "jokes_requests/jokes_count",
       locals: { actual: number, limit: jokes_request.amount }
     )
-  end
-
-  def missing_jokes_count
-    jokes_request.amount - jokes_request.jokes.size
   end
 
   def make_request
