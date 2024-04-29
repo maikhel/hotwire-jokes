@@ -29,14 +29,14 @@ class FetchJokesService
 
   def broadcast_update_to_show_page(joke, num)
     add_joke(joke, num)
-    update_progress_bar(num)
-    update_jokes_count(num)
+    # update_progress_bar(num)
+    # update_jokes_count(num)
   end
 
   def add_joke(joke, jokes_count)
     last_page = jokes_count / Joke::PER_PAGE + 1
 
-    if jokes_count % Joke::PER_PAGE ==  1 # change page to next one
+    if false # jokes_count % Joke::PER_PAGE ==  1 # change page to next one
       clear_all_jokes
       add_joke_card(joke)
       replace_pagination(jokes_count, last_page)
@@ -76,7 +76,7 @@ class FetchJokesService
   end
 
   def update_progress_bar(number)
-    Turbo::StreamsChannel.broadcast_replace_to(
+    Turbo::StreamsChannel.broadcast_append_to(
       [ jokes_request, "jokes_progress_bar" ],
       target: "jokes_progress_bar",
       partial: "jokes_requests/jokes_progress_bar",

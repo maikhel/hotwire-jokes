@@ -1,5 +1,9 @@
 <% progress_width = actual / limit.to_f * 100 %>
 
-<div id="jokes_progress_bar" class="w-full bg-gray-200 rounded-full">
-  <div class="h-0.5 bg-lime-500 rounded-full" style="width: <%= progress_width.to_i %>%;"></div>
+<div id="jokes_progress_bar"
+     class="w-full bg-gray-200 rounded-full">
+  <div class="h-0.5 bg-lime-500 rounded-full"
+       data-progress-bar-target="progress"
+       style="width: <%= progress_width.to_i %>%;">
+  </div>
 </div>
