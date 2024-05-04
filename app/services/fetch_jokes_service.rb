@@ -29,8 +29,6 @@ class FetchJokesService
 
   def broadcast_update_to_show_page(joke, num)
     add_joke(joke, num)
-    # update_progress_bar(num)
-    # update_jokes_count(num)
   end
 
   def add_joke(joke, jokes_count)
@@ -56,9 +54,9 @@ class FetchJokesService
   def add_joke_card(joke)
     Turbo::StreamsChannel.broadcast_append_to(
       [ jokes_request, "jokes" ],
-      target: "jokes_grid",
+      target: "hidden_jokes_grid",
       partial: "jokes/joke",
-      locals: { joke: joke }
+      locals: { joke: joke, extra_style: 'hidden' }
     )
   end
 
@@ -72,24 +70,6 @@ class FetchJokesService
       target: "jokes_pagination",
       partial: "jokes_requests/jokes_pagination",
       locals: { pagy: pagy }
-    )
-  end
-
-  def update_progress_bar(number)
-    Turbo::StreamsChannel.broadcast_append_to(
-      [ jokes_request, "jokes_progress_bar" ],
-      target: "jokes_progress_bar",
-      partial: "jokes_requests/jokes_progress_bar",
-      locals: { actual: number, limit: jokes_request.amount }
-    )
-  end
-
-  def update_jokes_count(number)
-    Turbo::StreamsChannel.broadcast_replace_to(
-      [ jokes_request, "jokes_count" ],
-      target: "jokes_count",
-      partial: "jokes_requests/jokes_count",
-      locals: { actual: number, limit: jokes_request.amount }
     )
   end
 

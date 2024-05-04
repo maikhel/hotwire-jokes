@@ -36,12 +36,14 @@
 
   <%= render "jokes_progress_bar", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
 
+  <div id='hidden_jokes_grid' data-progress-bar-target="hiddenJokesGrid"></div>
+
   <%= turbo_frame_tag "jokes" do %>
     <div id='jokes_grid'
         data-progress-bar-target="jokesGrid"
         class="grid grid-cols-3 gap-4 mt-4">
       <% @jokes.each do |joke| %>
-        <%= render 'jokes/joke', joke: joke %>
+        <%= render 'jokes/joke', joke: joke, extra_style: '' %>
       <% end %>
     </div>
   <% end %>
