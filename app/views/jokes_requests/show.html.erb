@@ -1,7 +1,4 @@
 <%= turbo_stream_from @jokes_request, "jokes" %>
-<%= turbo_stream_from @jokes_request, "jokes_count" %>
-<%= turbo_stream_from @jokes_request, "jokes_progress_bar" %>
-<%= turbo_stream_from @jokes_request, "jokes_pagination" %>
 
 <div id="jokes_show"
      data-controller="progress-bar"
@@ -46,6 +43,9 @@
         <%= render 'jokes/joke', joke: joke, extra_style: '' %>
       <% end %>
     </div>
+    <% if @jokes_request.jokes.count > Joke::PER_PAGE %>
+      <%= render "jokes_pagination", pagy: @pagy %>
+    <% end %>
   <% end %>
 
   <div>

@@ -16,7 +16,7 @@ class FetchJokesService
       joke = parse_response(response)
 
       @jokes_request.jokes.create(body: joke)
-      broadcast_update_to_show_page(joke, num + 1)
+      broadcast_update_to_show_page(joke)
       sleep(jokes_request.delay) if jokes_request.delay.positive?
     end
 
@@ -27,49 +27,12 @@ class FetchJokesService
 
   attr_reader :jokes_request
 
-  def broadcast_update_to_show_page(joke, num)
-    add_joke(joke, num)
-  end
-
-  def add_joke(joke, jokes_count)
-    last_page = jokes_count / Joke::PER_PAGE + 1
-
-    if false # jokes_count % Joke::PER_PAGE ==  1 # change page to next one
-      clear_all_jokes
-      add_joke_card(joke)
-      replace_pagination(jokes_count, last_page)
-    else
-      add_joke_card(joke)
-    end
-  end
-
-  def clear_all_jokes
-    Turbo::StreamsChannel.broadcast_replace_to(
-      [ jokes_request, "jokes" ],
-      target: "jokes_grid",
-      partial: "jokes_requests/empty_jokes_grid"
-    )
-  end
-
-  def add_joke_card(joke)
+  def broadcast_update_to_show_page(joke)
     Turbo::StreamsChannel.broadcast_append_to(
       [ jokes_request, "jokes" ],
       target: "hidden_jokes_grid",
       partial: "jokes/joke",
-      locals: { joke: joke, extra_style: 'hidden' }
-    )
-  end
-
-  def replace_pagination(jokes_count, last_page)
-    pagy = Pagy.new(count: jokes_count, page: last_page,
-              items: Joke::PER_PAGE,
-              link_extra: 'data-turbo-action="advance"')
-
-    Turbo::StreamsChannel.broadcast_replace_to(
-      [ jokes_request, "jokes_pagination" ],
-      target: "jokes_pagination",
-      partial: "jokes_requests/jokes_pagination",
-      locals: { pagy: pagy }
+      locals: { joke: joke, extra_style: "hidden" }
     )
   end
 
