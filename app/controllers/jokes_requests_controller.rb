@@ -26,7 +26,7 @@ class JokesRequestsController < ApplicationController
 
     respond_to do |format|
       if @jokes_request.save
-        FetchJokesJob.perform_later(@jokes_request.id)
+        FetchJokesSupervisorJob.perform_later(@jokes_request.id)
         format.html { redirect_to jokes_request_url(@jokes_request), notice: "Jokes request was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }

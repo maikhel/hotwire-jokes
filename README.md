@@ -11,6 +11,7 @@ Use tags to jump around different stages of the app development:
 |Scaffold of app | base-app | [link](https://github.com/maikhel/hotwire-jokes/tree/base-app) | `git checkout base-app`
 |Broadcast jokes from model | broadcast-with-pagination |[link](https://github.com/maikhel/hotwire-jokes/tree/broadcast-with-pagination) | `git checkout broadcast-with-pagination`
 |Broadcast jokes from job | broadcast-from-job | [link](https://github.com/maikhel/hotwire-jokes/tree/broadcast-from-job) | `git checkout broadcast-from-job`
+|Broadcast with Stimulus | broadcast-with-stimulus | [link](https://github.com/maikhel/hotwire-jokes/tree/broadcast-with-stimulus) | `git checkout broadcast-with-stimulus`
 
 ## Setup
 
