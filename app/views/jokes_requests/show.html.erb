@@ -1,45 +1,49 @@
 <%= turbo_stream_from @jokes_request, "jokes" %>
-<%= turbo_stream_from @jokes_request, "jokes_count" %>
-<%= turbo_stream_from @jokes_request, "jokes_progress_bar" %>
 <%= turbo_stream_from @jokes_request, "jokes_pagination" %>
 
-<div class="flex justify-between items-center mb-4 border-b border-neutral-300">
-  <h2 class="text-xl text-slate-500 font-bold pb-2">Jokes Request #<%= @jokes_request.id %></h2>
-</div>
+<div id="jokes_show"
+     data-controller="progress-bar"
+     data-progress-bar-limit-value="<%= @jokes_request.amount %>"
+     data-progress-bar-actual-value="<%= @jokes_request.jokes.count %>">
 
-<div class="flex mt-1">
-  <div class="font-bold">Created at:</div>
-  <div class="mx-2"><%= @jokes_request.created_at %></div>
-</div>
-
-<div class="flex mt-1">
-  <div class="font-bold">Amount:</div>
-  <div class="mx-2"><%= @jokes_request.amount %></div>
-</div>
-
-<div class="flex mt-1">
-  <div class="font-bold">Delay (in seconds):</div>
-  <div class="mx-2"><%= @jokes_request.delay %></div>
-</div>
-
-<div class="flex mt-1">
-  <div class="font-bold mr-2">Jokes count:</div>
-  <%= render "jokes_count", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
-</div>
-
-<h2 class="text-2xl text-lime-500 text-center font-bold pb-2">Jokes</h2>
-
-<%= render "jokes_progress_bar", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
-
-<%= turbo_frame_tag "jokes" do %>
-  <div id='jokes_grid' class="grid grid-cols-3 gap-4 mt-4">
-    <% @jokes.each do |joke| %>
-      <%= render 'jokes/joke', joke: joke %>
-    <% end %>
+  <div class="flex justify-between items-center mb-4 border-b border-neutral-300">
+    <h2 class="text-xl text-slate-500 font-bold pb-2">Jokes Request #<%= @jokes_request.id %></h2>
   </div>
-  <%= render "jokes_pagination", pagy: @pagy %>
-<% end %>
 
-<div>
-  <%= link_to sanitize("&larr; Back to jokes requests"), jokes_requests_path, class: "mt-4 inline-block text-slate-500" %>
+  <div class="flex mt-1">
+    <div class="font-bold">Created at:</div>
+    <div class="mx-2"><%= @jokes_request.created_at %></div>
+  </div>
+
+  <div class="flex mt-1">
+    <div class="font-bold">Amount:</div>
+    <div class="mx-2"><%= @jokes_request.amount %></div>
+  </div>
+
+  <div class="flex mt-1">
+    <div class="font-bold">Delay (in seconds):</div>
+    <div class="mx-2"><%= @jokes_request.delay %></div>
+  </div>
+
+  <div class="flex mt-1">
+    <div class="font-bold mr-2">Jokes count:</div>
+    <%= render "jokes_count", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
+  </div>
+
+  <h2 class="text-2xl text-lime-500 text-center font-bold pb-2">Jokes</h2>
+
+  <%= render "jokes_progress_bar", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
+
+  <%= turbo_frame_tag "jokes" do %>
+    <div id='jokes_grid' class="grid grid-cols-3 gap-4 mt-4">
+      <% @jokes.each do |joke| %>
+        <%= render 'jokes/joke', joke: joke %>
+      <% end %>
+    </div>
+    <%= render "jokes_pagination", pagy: @pagy %>
+  <% end %>
+
+  <div>
+    <%= link_to sanitize("&larr; Back to jokes requests"), jokes_requests_path, class: "mt-4 inline-block text-slate-500" %>
+  </div>
 </div>
