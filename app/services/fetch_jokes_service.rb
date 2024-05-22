@@ -30,9 +30,9 @@ class FetchJokesService
   def broadcast_update_to_show_page(joke)
     Turbo::StreamsChannel.broadcast_append_to(
       [ jokes_request, "jokes" ],
-      target: "hidden_jokes_grid",
+      target: "jokes_grid",
       partial: "jokes/joke",
-      locals: { joke: joke, extra_style: "hidden" }
+      locals: { joke: joke }
     )
   end
 

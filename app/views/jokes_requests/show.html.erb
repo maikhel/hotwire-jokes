@@ -33,8 +33,6 @@
 
   <%= render "jokes_progress_bar", actual: @jokes_request.jokes.count, limit: @jokes_request.amount %>
 
-  <div id='hidden_jokes_grid' data-progress-bar-target="hiddenJokesGrid"></div>
-
   <%= turbo_frame_tag "jokes" do %>
     <div id='jokes_grid'
         data-progress-bar-target="jokesGrid"

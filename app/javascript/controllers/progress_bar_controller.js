@@ -6,23 +6,18 @@ export default class extends Controller {
     limit: 0,
     actual: 0,
   }
-  static targets = ["jokesGrid", "hiddenJokesGrid", "progress", "count"]
+  static targets = ["progress", "count"]
   connect() {
-    this.observer = new MutationObserver((mutationsList, _observer) => {
-      for (let mutation of mutationsList) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          mutation.addedNodes.forEach(el => {
-            if(el.classList != undefined){
-              this.revealJoke(el)
-              this.increment()
-            }
-          });
+    addEventListener("turbo:before-stream-render", ((event) => {
+      const fallbackToDefaultActions = event.detail.render
 
+      event.detail.render = (streamElement) => {
+        if (streamElement.action === "append" && streamElement.target === "jokes_grid") {
+          this.increment()
         }
+        fallbackToDefaultActions(streamElement)
       }
-    })
-
-    this.observer.observe(this.hiddenJokesGridTarget, { childList: true, subtree: true })
+    }))
   }
 
   increment() {
@@ -38,10 +33,5 @@ export default class extends Controller {
 
   updateCount() {
     this.countTarget.innerText = `${this.actualValue} / ${this.limitValue}`
-  }
-
-  revealJoke(joke) {
-    this.jokesGridTarget.append(joke)
-    this.jokesGridTarget.lastChild.classList.remove("hidden")
   }
 }
